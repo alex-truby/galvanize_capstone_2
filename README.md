@@ -37,7 +37,7 @@ The results from the PCA on the demographic data indicated that I really only ne
 
 ![Demographic PCA Plot](./images/dem_pca.png)
 
-This first pass of EDA left me with 7 features as inputs into my models: 4 environmental, and 3 demographic.
+This first pass of EDA left me with seven features as inputs into my models: four environmental, and three demographic.
 
 Further EDA, particularly for the linear regression model, will be covered later in the README.
 
@@ -67,7 +67,7 @@ Linear regression models arguably offer the best insight as to which variables a
     |percent_minority        | 9.22    |
     |percent_no_hs_diploma   | 4.73    |
     |percent_over_65_yrs     | 4.16    |
-    |                        |         |
+
 
 
     * <div align="left">As can be seen above, there are a few features with a VIF above 10. Additionally, given what we learned from the earlier PCA, I felt pretty confident that the percent_minority could be dropped. It is right on the cusp of the VIF threshold, and the earlier PCA illustrated that likely only two demographic variables are needed. Dropping both the particulate_matter and percent_minority variables, and running the VIF test again, all input variables had a VIF below ten.
