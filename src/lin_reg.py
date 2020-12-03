@@ -22,8 +22,6 @@ from yellowbrick.regressor import CooksDistance
 plt.style.use('ggplot')
 
 
-
-#check for colinearity with VIF
 def colinearity_check(X):
     for i, col_name in enumerate(list(X.columns)):
         print(f'{col_name}', variance_inflation_factor(X.values, i))
@@ -53,7 +51,6 @@ def homoscedasticity_test_plot(model, y_train, X_train, y_test):
     #ax.plot(xx, [0]*100, color='red, lw=3')
     #fig.savefig('./linear_reg_residualsplot_normal_target.png', dpi=200)
     plt.show()
-
 
 
 def check_for_outliers(y, X_col):
