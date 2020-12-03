@@ -120,6 +120,7 @@ if __name__ == '__main__':
     final_lin_df = post_pca_df.drop(['DS_PM_pred', 'EP_MINRTY'], axis=1)
     y = final_lin_df.pop('CANCER_CrudePrev')
     X = final_lin_df
+    #X = sm.add_constant(X)
 
     #colinearity_check(X)
     # second collinearity check resulted in features all below a VIF of 10:
@@ -129,34 +130,18 @@ if __name__ == '__main__':
     # EP_NOHSDP 2.37
     # EP_AGE65 3.51
 
-
+    #to run model without removing outlier features
     # X_train, X_test, y_train, y_test = train_test_split(X, y, train_size  = 0.8, random_state = 34, shuffle=True)
     # OLS_model = regression_model(y_train, X_train)
-
     #create_qq_plot(OLS_model, y_train, X_train, y_test)
-
     #homoscedasticity_test_plot(OLS_model, y_train, X_train, y_test)
-
     # print(regression_model(y_train, X_train).summary())
-
-    # has_superfund = X['has_superfund']
-    # acet = X['ACETALDEHYDE_repiratory_HI']
-    # hs_dip = X['EP_NOHSDP']
-    # diesel = X['DIESEL PM_repiratory_HI']
-    # over_65 = X['EP_AGE65']
-
-    # test_outlier = check_for_outliers(y, diesel)
     
-    # for col in test_outlier.columns:
-    #     print(test_outlier[col].max())
-        
-    #print(test_outlier['cooks_d'].values.argmax())
 
-    largest_cooks_distance_indices = []
-    
+    #this section removes features with Cook's Distance outliers
+
     indices_to_drop_1 = [18392, 15934, 5911]
     indices_to_drop_2 = []
-
 
     y_new = y.copy()
     X_new = X.copy() #26612 rows
@@ -164,16 +149,12 @@ if __name__ == '__main__':
     for index in indices_to_drop_1:
         y_new, X_new = drop_rows(y_new, X_new, index)
 
-    print(y_new.shape, X_new.shape) #26609 rows
-
     for col in ['has_superfund', 'EP_AGE65']:
         test_outlier = check_for_outliers(y_new, X_new[col])
         indices_to_drop_2.append(test_outlier['cooks_d'].values.argmax())
 
     for index in indices_to_drop_2:
         y_new, X_new = drop_rows(y_new, X_new, index)
-
-    print(y_new.shape, X_new.shape) #26607 rows
 
     test_outlier = check_for_outliers(y_new, X_new['EP_AGE65'])
     index_to_drop = test_outlier['cooks_d'].values.argmax()
@@ -184,10 +165,30 @@ if __name__ == '__main__':
     to_drop = test_outlier['cooks_d'].values.argmax()
     y_new = y_new.drop(to_drop, axis=0)
     X_new = X_new.drop(to_drop, axis=0)
+    X_new = sm.add_constant(X_new)
 
-    print(y_new.shape, X_new.shape)
+    #quick check to make sure high Cook's values were removed
+    #print(y_new.shape, X_new.shape)
  
+
+
+    #only run if removing cancer rates >15 percent
+    # remove_potential_outliers_df = X_new.copy()
+    # remove_potential_outliers_df['target'] = y_new.copy()
+
+    # potential_outliers_indices = remove_potential_outliers_df.index[remove_potential_outliers_df['target'] > 15].tolist()
+    # potential_outliers_indices.sort(reverse=True)
+
+    # for index in potential_outliers_indices:
+    #     remove_potential_outliers_df.drop(index, axis=0, inplace=True)
+
+    # y_outliers_removed = remove_potential_outliers_df.pop('target')
+    # X_outliers_removed = remove_potential_outliers_df
+
+
+
     X_train, X_test, y_train, y_test = train_test_split(X_new, y_new, train_size  = 0.8, random_state = 34, shuffle=True)
     OLS_model = regression_model(y_train, X_train)
 
     create_qq_plot(OLS_model, y_train, X_train, y_test)
+    homoscedasticity_test_plot(OLS_model, y_train, X_train, y_test)
