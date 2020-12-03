@@ -86,7 +86,7 @@ Linear regression models arguably offer the best insight as to which variables a
 <div align="left">
 
 
-* Normally distributed residuals - This assumption was NOT met by the data. Further explanation and data exploration around where and why this failed can be found **HERE** (link to another README.)
+* Normally distributed residuals - This assumption was NOT met by the data. Further explanation and data exploration around where and why this failed can be found [here](https://github.com/alex-truby/galvanize_capstone_2/blob/master/linear_regression_README.md).
 * Variance of the residuals is constant - This assumption also was NOT met by the data. The link above contains a detailed exploration of this assumption as well. 
 
 Because not all of the assumptions for lienar regression were met by the data, the coefficients from this model will not give accurate insight as to how the features are impacting the target. Given that obtaining this insight was the goal of this project, we will move on to a random forest model for analysis.
@@ -101,12 +101,18 @@ The following chart illustrates the importance of the input features into this m
 
 ![Feature Importance Chart](./images/rf_feature_importances.png)
 
-It was interesitng to find that a lack of highschool diploma was the most influential vairable for this model, followed (far behind) by diesel particulate matter. One this to highlight is that the feature importances are not grouped by demographic and environmental inputs, rather a mix of them has shown to be important for the model.
+It was interesitng to find that a lack of highschool diploma was the most influential vairable for this model, followed (far behind) by diesel particulate matter. One thing to highlight is that the feature importances are not grouped by demographic and environmental inputs, rather a mix of them has shown to be important for the model.
 
+While prediction wasn't the goal of this project, you'd hope that the model does decently well if you are trying to glean information around what is driving the target variable. Overall, the model was avergaing within about a percentage point (where 1 = 1%). 
 
+<div align="center">
+
+ Model RMSE = 0.9
+
+<div align="left">
 
 -----
 
 ## Conclusion 
 
-This study has illustrated that both demographic and environmental factors are driivng cancer rates at the census tract level. The model would probably still do fairly well utilizing only the demographic features based on the feature importances we just looked at, but is improved with the addition of the environmental features. Additionally, while these values illustrate that the lack of high school diploma was the most influential factor for this particular model, we do not have any clarity around what may be driving the education levels at the tract level. Do people with lower education/income end up driven into areas with lower environmental quality? That would need to be answered with a separate study.
+This study has illustrated that both demographic and environmental factors are contributing factors to cancer rates at the census tract level. The model would probably still do fairly well utilizing only the demographic features based on the feature importances we just looked at, but is improved with the addition of the environmental features. Additionally, while these values illustrate that the lack of high school diploma was the most influential factor for this particular model, we do not have any clarity around what may be driving the education levels at the tract level. Do people with lower education/income end up driven into areas with lower environmental quality, and so end up with increased cancer rates? That would need to be answered with a separate study and might be something to look into for next steps.
