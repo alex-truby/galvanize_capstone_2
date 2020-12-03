@@ -51,6 +51,7 @@ As mentioned earlier, the goal of this project is to understand *what* is drivin
 Linear regression models arguably offer the best insight as to which variables are influencing the target by way of the model coefficients. However, in order for the coefficients to be interprettable, the model must meet the following five assumptions:
 
 * Linearity (relationship between X and y)
+* Independence
 * No multicollinearity between features
     * One way to check for multicollinearity between input features is to check the variance inflation factor (VIF). A general rule of thumb is that if the VIF of a feature is greater than 10, is it likely collinear with another input for the model
     * The following results were obtained after calculating the VIF for each of the seven input features:
@@ -69,7 +70,7 @@ Linear regression models arguably offer the best insight as to which variables a
     |                        |         |
 
 
-    * <div align="left">As can be seen above, there are a few features with a VIF above 10. Additionally, given what we learned from the earlier PCA, I felt pretty confident that the percent_minority could be dropped. It is right on the cusp of the VIF threshold, and the earlier PCA illustrated that likely only two demographic variables are needed. Dropping both the particulate_matter and percent_minority variables, and running the VIF test again, gave the following results:
+    * <div align="left">As can be seen above, there are a few features with a VIF above 10. Additionally, given what we learned from the earlier PCA, I felt pretty confident that the percent_minority could be dropped. It is right on the cusp of the VIF threshold, and the earlier PCA illustrated that likely only two demographic variables are needed. Dropping both the particulate_matter and percent_minority variables, and running the VIF test again, all input variables had a VIF below ten.
 
 <div align="center">
 
@@ -84,15 +85,11 @@ Linear regression models arguably offer the best insight as to which variables a
 
 <div align="left">
 
-   # has_superfund 1.00
-    # ACETALDEHYDE_repiratory_HI 6.91
-    # DIESEL PM_repiratory_HI 3.22
-    # EP_NOHSDP 2.37
-    # EP_AGE65 3.51
 
-* Independence
-* Normally distributed residuals
-* Variance of the residuals is constant
+* Normally distributed residuals - This assumption was NOT met by the data. Further explanation and data exploration around where and why this failed can be found **HERE** (link to another README.)
+* Variance of the residuals is constant - This assumption also was NOT met by the data. The link above contains a detailed exploration of this assumption as well. 
+
+Because not all of the assumptions for lienar regression were met by the data, the coefficients from this model will not give accurate insight as to how the features are impacting the target. Given that obtaining this insight was the goal of this project, we will move on to gradient boost and random forest for the remainder of the anlaysis.
 
 ### Gradient Boost
 
@@ -106,4 +103,4 @@ Because the results of the Random Forest & Gradient Descent models were both ext
 
 -----
 
-##Conclusion 
+## Conclusion 
