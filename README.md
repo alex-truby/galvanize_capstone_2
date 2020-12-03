@@ -23,7 +23,7 @@ While my goal was to find data sets for all of the features that are utilized in
 
 The below table gives a snapshot of the data as it was initially collected. 
 
-![Raw Data Summary Table]('./images/capstone_2_raw_data.png')
+![Raw Data Summary Table](./images/capstone_2_raw_data.png)
 
 Each table had to be slightly modified in order to be able to combine them all into a single table, broken out at the census tract level. The script for that data cleaning process can be found in the src folder of this repo.
 
@@ -35,7 +35,7 @@ A quick scatterplot of my model inputs told me that many of the demographic feau
 
 The results from the PCA on the demographic data indicated that I really only needed to include two of the original four variables to account for 90% of the variance (see below image). I took this into account when building out my models later in the process. While only two demographic variables were needed to explain 90% of the variance, I decided to keep a third after this first inital pass of the EDA to have 95% of the variance explained, understanding I may want to drop it later in the process.
 
-![Demographic PCA Plot]('./images/dem_pca.png')
+![Demographic PCA Plot](./images/dem_pca.png)
 
 This first pass of EDA left me with 7 features as inputs into my models: 4 environmental, and 3 demographic.
 
