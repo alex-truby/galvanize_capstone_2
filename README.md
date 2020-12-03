@@ -13,7 +13,7 @@ While cancer rates are by no means the only indicators of community health and w
 
 #### My goal is to utilize similar features (both demographic and environmental) that the EPA uses as inputs into the EJST to better understand what most drives cancer rates in populations at the census tract level in the US.
 
-To accomplish this goal, I've evaluted three different inferential models (linear regression, random forest, and gradient boost) to better understand what factors have the most influence on cancer rates. 
+To accomplish this goal, I've evaluted a few different inferential models to better understand what factors have the most influence on cancer rates. 
 
 -----
 
@@ -33,7 +33,7 @@ Each table had to be slightly modified in order to be able to combine them all i
 
 A quick scatterplot of my model inputs told me that many of the demographic feautures I wanted to use as inputs to my models were likely correlated. Additonally, a few of the chemical hazard indexes (HIs) I had pulled in only contained zero values. So, I dropped all of the HIs with zero values, and made a separate dataframe of only the demographic features to input into a PCA model to find out how many of them will actually be useful to my model. 
 
-The results from the PCA on the demographic data indicated that I really only needed to include two of the original four variables to account for 90% of the variance (see below image). I took this into account when building out my models later in the process. While only two demographic variables were needed to explain 90% of the variance, I decided to keep a third after this first inital pass of the EDA to have 95% of the variance explained, understanding I may want to drop it later in the process.
+The results from the PCA on the demographic data indicated that I really only needed to include two of the original four variables to account for 90% of the variance (see below image). I took this into account when building out my models later in the process. While only two demographic variables were needed to explain just about 90% of the variance, I decided to keep a third after this first inital pass of the EDA since only two PCAs didn't quite hit the desired 90% threshold fir exaplained variance. 
 
 ![Demographic PCA Plot](./images/dem_pca.png)
 
@@ -81,7 +81,7 @@ Linear regression models arguably offer the best insight as to which variables a
 |diesel_HI               |  3.22   |
 |percent_no_hs_diploma   |  2.37   |
 |percent_over_65_yrs     |  3.51   |
-|                        |         |
+
 
 <div align="left">
 
@@ -89,18 +89,24 @@ Linear regression models arguably offer the best insight as to which variables a
 * Normally distributed residuals - This assumption was NOT met by the data. Further explanation and data exploration around where and why this failed can be found **HERE** (link to another README.)
 * Variance of the residuals is constant - This assumption also was NOT met by the data. The link above contains a detailed exploration of this assumption as well. 
 
-Because not all of the assumptions for lienar regression were met by the data, the coefficients from this model will not give accurate insight as to how the features are impacting the target. Given that obtaining this insight was the goal of this project, we will move on to gradient boost and random forest for the remainder of the anlaysis.
-
-### Gradient Boost
+Because not all of the assumptions for lienar regression were met by the data, the coefficients from this model will not give accurate insight as to how the features are impacting the target. Given that obtaining this insight was the goal of this project, we will move on to a random forest model for analysis.
 
 ### Random Forest
 
------
+While a random forest model does not provide near as much *reliable* interpretability as a linear regression, it can still provide some insight as to how the model is utilizing each of the input variables. The feature importances combines the following two metrics to give some insight as to how features are contributing to the model:
+* The amount of information gained for splitting on a feature
+* The portion of points that pass through a single split (more importance associated with splits made higher in the tree)
 
-## Final Model
-Because the results of the Random Forest & Gradient Descent models were both extremely comprable in terms of RMSE, I'll focus on the Random Forest Model, because I feel that is more easily interpretable. 
+The following chart illustrates the importance of the input features into this model.
+
+![Feature Importance Chart](./images/rf_feature_importances.png)
+
+It was interesitng to find that a lack of highschool diploma was the most influential vairable for this model, followed (far behind) by diesel particulate matter. One this to highlight is that the feature importances are not grouped by demographic and environmental inputs, rather a mix of them has shown to be important for the model.
+
 
 
 -----
 
 ## Conclusion 
+
+This study has illustrated that both demographic and environmental factors are driivng cancer rates at the census tract level. The model would probably still do fairly well utilizing only the demographic features based on the feature importances we just looked at, but is improved with the addition of the environmental features. Additionally, while these values illustrate that the lack of high school diploma was the most influential factor for this particular model, we do not have any clarity around what may be driving the education levels at the tract level. Do people with lower education/income end up driven into areas with lower environmental quality? That would need to be answered with a separate study.
