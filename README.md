@@ -1,7 +1,11 @@
 # What is Driving Cancer Rates at the US Census Tract Level?
 
+   <div align="center">
+
 ![Cacner Rates 500 Cities Project](./images/500_cities_cancer_rates.png)
 ###### Image shows CDC 500 Cities Project Cancer Rate Estimates ([Source](https://nccd.cdc.gov/500_Cities/rdPage.aspx?rdReport=DPH_500_Cities.InteractiveMap&islCategories=HLTHOUT&islMeasures=ARTHRITIS&islStates=59&rdRnd=95228))
+
+<div align="left">
 
 ------
 Alex Truby
