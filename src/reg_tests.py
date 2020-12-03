@@ -64,14 +64,11 @@ class StochasticModels():
 
     
 def feature_importances_plot(col_list, model, X, y):
-    #rf = RandomForestRegressor(n_estimators = n_estimators, max_features = max_features, random_state=random_state)
-
 
     importances = model.feature_importances_
     std = np.std([iteration.feature_importances_ for iteration in model.estimators_], axis=0)
     indices = np.argsort(importances)[::-1]
 
-    #print(X[1])
     print("Feature Ranking:")
     for f in range(X.shape[1]):
         print("%d. feature %d (%f)" % (f + 1, indices[f], importances[indices[f]]))
@@ -85,11 +82,11 @@ def feature_importances_plot(col_list, model, X, y):
 
     ax.set_xticks(range(X.shape[1]))
     ax.set_xticklabels(col_list, rotation = 45, fontsize=12)
-    #ax.set_xlim([-1, number_features])
     ax.set_ylabel("Importance", fontsize=12)
     ax.set_title("Feature Importances", fontsize=18)
     fig.tight_layout()
     plt.show()
+
 
 
 

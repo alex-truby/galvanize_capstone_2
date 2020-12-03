@@ -168,8 +168,7 @@ if __name__ == '__main__':
     #print(y_new.shape, X_new.shape)
  
 
-
-    #only run if removing cancer rates >15 percent
+    #only run if removing cancer rates >15 percent (outlier check for linear regression assumptions)
     # remove_potential_outliers_df = X_new.copy()
     # remove_potential_outliers_df['target'] = y_new.copy()
 
