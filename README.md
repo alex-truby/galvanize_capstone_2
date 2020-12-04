@@ -2,8 +2,8 @@
 
    <div align="center">
 
-![Cacner Rates 500 Cities Project](./images/500_cities_cancer_rates.png)
-###### Image shows CDC 500 Cities Project Cancer Rate Estimates ([Source](https://nccd.cdc.gov/500_Cities/rdPage.aspx?rdReport=DPH_500_Cities.InteractiveMap&islCategories=HLTHOUT&islMeasures=ARTHRITIS&islStates=59&rdRnd=95228))
+![Cacner Rates 500 Cities Project](./images/500_cities_map_red.png)
+###### Image shows CDC 500 Cities Project Cancer Rate Estimates ([Source](https://www.cdc.gov/500cities/index.htm))
 
 <div align="left">
 
@@ -15,7 +15,7 @@ Galvanize Capstone 2
 -----
 ## Project Goal
 
- The EPA has put together an "Environmental Justice Screening Tool" (EJST), which utilizes both environmental and demographic indicators in an effort to help policy makers identify communites' potential risk resulting from lack of enforcement around environmental laws, regulations, and policies. The screening tool does not, however, *actually* provide an "index" on which communicaties can be evaluated and ranked. 
+ The EPA has put together an "Environmental Justice Screening Tool" (EJST), which utilizes both environmental and demographic indicators in an effort to help policy makers identify communites' potential risk resulting from lack of enforcement around environmental laws, regulations, and policies. The screening tool does not, however, *actually* provide an "index" on which communities can be evaluated and ranked. 
 
 While cancer rates are by no means the only indicators of community health and well being, that is what I have chosen as my target for this capstone, as a proxy for areas of concern regarding environmental justice. 
 
@@ -39,11 +39,16 @@ Each table had to be slightly modified in order to be able to combine them all i
 
 ## Inital EDA
 
-A quick scatterplot of the model inputs illustrated that many of the demographic feautures I wanted to use as inputs to my models were likely correlated. Additonally, a few of the chemical hazard indexes (HIs) pulled in only contained zero values. So, the HIs with zero values were dropped, and made a separate dataframe made containing only the demographic features to input into a PCA model to find out how many of them will actually be useful. 
+A quick scatterplot of the model inputs illustrated that a few of the chemical hazard index columns (HIs) pulled in only contained zero values. Those features were dropped from the model. Additionally, it appeared that many of the demographic features included were likely correlated.
 
-The results from the PCA on the demographic data indicated that really only two of the original four variables needed to be included to account for 90% of the variance (see below image). This was taken into account when building out the models later in the process. While only two demographic variables were needed to explain just about 90% of the variance, a third was kept after this first inital pass of the EDA since only two PCAs didn't quite hit the desired 90% threshold for exaplained variance. 
+For example, the two histograms below of the raw data for both percent poverty rate and lack of high school diploma are extremely similar. This is a good indication that one of these features can likely be dropped.
 
-![Demographic PCA Plot](./images/dem_pca.png)
+![Demographic EDA](./images/demo_eda.png)
+
+Looking at the target by itself, there is a clear right skew to the data. There also appears to be a few census tracts with particularly high cancer rates. This is another thing to keep in mind as the models are built out.
+
+![Cancer Rate Hist](./images/cancer_hist.png)
+
 
 This first pass of EDA left seven features as inputs into the models: four environmental, and three demographic.
 
@@ -61,7 +66,7 @@ Linear regression models arguably offer the best insight as to which variables a
 * Linearity (relationship between X and y)
 * Independence
 * No multicollinearity between features
-    * One way to check for multicollinearity between input features is to check the variance inflation factor (VIF). A general rule of thumb is that if the VIF of a feature is greater than 10, is it likely collinear with another input for the model
+    * One way to check for multicollinearity between input features is to check the variance inflation factor (VIF). A general rule of thumb is that if the VIF of a feature is greater than 10, is it likely collinear with another input for the model.
     * The following results were obtained after calculating the VIF for each of the seven input features:
 
     <div align="center">
@@ -78,7 +83,7 @@ Linear regression models arguably offer the best insight as to which variables a
 
 
 
-    * <div align="left">As can be seen above, there are a few features with a VIF above 10. Additionally, given what we learned from the earlier PCA, I felt pretty confident that the percent_minority could be dropped. It is right on the cusp of the VIF threshold, and the earlier PCA illustrated that likely only two demographic variables are needed. Dropping both the particulate_matter and percent_minority variables, and running the VIF test again, all input variables had a VIF below ten.
+    * <div align="left">As can be seen above, there are a few features with a VIF above 10. Additionally, given the apparent collinearity of demographic features from a visual inspection during EDA, percent minority was also dropped since it was right on the cusp of the desired VIF threshold. Dropping both the particulate_matter and percent_minority variables, and running the VIF test again, all input variables had a VIF below ten.
 
 <div align="center">
 
@@ -105,7 +110,7 @@ While a random forest model does not provide near as much *reliable* interpretab
 * The amount of information gained for splitting on a feature
 * The portion of points that pass through a single split (more importance associated with splits made higher in the tree)
 
-The following chart illustrates the importance of the input features into this model. These importances however **do not tell us the effect size and direction of the features**. That can only be gained from a linear regression model, which is why it is unfortunate those assumptions did not hold for this dataset.
+The following chart illustrates the importance of the input features into this model. These importances however **do not tell us the effect size and direction of the features**. That can only be gained from a linear regression model, which is why it is unfortunate those assumptions did not hold for this dataset. For example, we cannot conclude that a higher percentage of lack of highschool diploma in a census tract leads to increased cancer rates. Statements like that cannot be supported by this model, and can only be inferred based on domain knowledge (and assumptions still may not be correct).
 
 ![Feature Importance Chart](./images/rf_feature_importances.png)
 
@@ -125,4 +130,14 @@ While prediction wasn't the goal of this project, you'd hope that the model does
 
 ## Conclusion 
 
-This study has illustrated that both demographic and environmental factors are contributing to cancer rates at the census tract level. The model would probably still do fairly well utilizing only the demographic features based on the feature importances we just looked at, but is improved with the addition of the environmental features. Additionally, while these values illustrate that the lack of high school diploma was the most influential factor for this particular model, we do not have any clarity around what may be driving the education levels at the tract level. Do people with lower education/income end up driven into areas with lower environmental quality, and so end up with increased cancer rates? That would need to be answered with a separate study and might be something to look into for next steps.
+To re-emphasize, even though a linear regression model would give more insight as to how demographic and environmental factors are impacting cancer rates, it could not be utilized because not all of the model assumptions were met. Without having this insight however, we cannot say for sure what, if any, actionable measures can be taken to reduce cancer rates based on the features analyzed. 
+
+That being said, this study has illustrated that both demographic and environmental factors are likely contributing factors to cancer rates at the census tract level. The model would probably still do fairly well utilizing only the demographic features based on the feature importances we just looked at, but is improved with the addition of the environmental features. Additionally, while these values illustrate that the lack of high school diploma was the most influential factor for this particular model, we do not have any clarity around what may be driving the education levels at the tract level. Do people with lower education/income end up driven into areas with lower environmental quality, and so end up with increased cancer rates? That would need to be answered with a separate study and might be something to look into for next steps.
+
+___
+
+## Next Steps
+
+* Spend more time digging into the cancer rate outliers. Are there known reasons some cities have higher cancer rates? Is it a viable option to remove these points? 
+
+* Potential to expand the study to other health related targets, such as asthma. Perhaps a linear regression model would be more telling with a different target.
