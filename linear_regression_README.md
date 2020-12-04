@@ -64,7 +64,11 @@ It can be gathered from a quick glance at the above plot that there is a fairly 
 
 Again, outliers should not be removed without strong evidence that there is a reason to do so. However, given the detailed anlaysis that was covered in the last section, we will jump to the residual variance plot that assumes outliers were removed.  If there is going to be constant variance in the model, it should be under these circumstances. 
 
+ <div align="center">
+
 ![Residual Variance Plot 2](./images/resid_var_post_outlier_removal.png)
+
+ <div align="left">
 
 While the variance of the residuals did tighten up, there is still a clear trend to the data. It is possible that there is at least one confounding variable missing form the model, but given the prevoius EDA performed and the failure of the last assumption, it is likely that **this assumption also does not hold true**.
 
