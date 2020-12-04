@@ -45,7 +45,7 @@ For example, the two histograms below of the raw data for both percent poverty r
 
 ![Demographic EDA](./images/demo_eda.png)
 
-Looking at the target by itself, there is a clear right skew to the data. There also appears to be a few census tracts with particularly high cancer rates. This is another thing to keep in mind as the models are built out.
+Looking at the target by itself, there is a clear right skew to the data. There also appears to be a few cancer rate bins with many more census tract counts than what would fall in line with the general trend. This is another thing to keep in mind as the models are built out.
 
 ![Cancer Rate Hist](./images/cancer_hist.png)
 
