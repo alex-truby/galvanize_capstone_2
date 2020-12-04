@@ -10,13 +10,14 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import mean_squared_error, r2_score
 from sklearn import preprocessing
 from sklearn.pipeline import make_pipeline
+from sklearn.inspection import plot_partial_dependence
 plt.style.use('ggplot')
 
 
 class StochasticModels():
     '''
     Prepare data for input into models.
-    Run various prediction models.
+    Run various inferrential regression models.
     '''
 
     def __init__(self, input_df, target_col_name):
@@ -107,7 +108,7 @@ if __name__ == '__main__':
     feature_list = ['No HS Diploma', 'Diesel HI', '% Minority', 'Acetaldehyde HI', 'Superfund', '% Over 65 Yrs', 'test']
     feature_importances_plot(feature_list, rf_model, features_X, features_y)
 
-    
+
 
     
     
