@@ -17,7 +17,7 @@ Galvanize Capstone 2
 
  The EPA has put together an "Environmental Justice Screening Tool" (EJST), which utilizes both environmental and demographic indicators in an effort to help policy makers identify communites' potential risk resulting from lack of enforcement around environmental laws, regulations, and policies. The screening tool does not, however, *actually* provide an "index" on which communities can be evaluated and ranked. 
 
-While cancer rates are by no means the only indicators of community health and well being, that is what I have chosen as my target for this capstone, as a proxy for areas of concern regarding environmental justice. 
+While cancer rates are by no means the only indicators of community health and well being, that is what I have chosen as my target for this capstone. My hope is to use this analysis to better understand just one aspect of the many potential environmental justice aspects facing communities. 
 
 #### My goal is to utilize similar features (both demographic and environmental) that the EPA uses as inputs into the EJST to better understand what most drives cancer rates in populations at the census tract level in the US.
 
